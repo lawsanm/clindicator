@@ -28,10 +28,43 @@ Colors, intensity, pulse/static and brightness are configurable.
   the same packet OpenRGB sends to the 2020–2023 Legion 4-zone keyboards and that L5P-Keyboard-RGB uses for
   `C994`. It is written only to the `FF89/00CC` HID collection of allowlisted Legion/LOQ/IdeaPad 4-zone PIDs.
   No firmware, embedded-controller or driver changes; no admin rights.
-- Other keyboards: choose **None** as the device to use the tray icon and notifications only.
-- **Fantech Atom Pro (checked 2026-10-03, USB `3151:6000` / Bluetooth "Atom Pro 5.0"):** not controllable.
-  OpenRGB's Royuan driver covers other `3151` PIDs but not `6000`, the keyboard has no Dynamic Lighting
-  interface, and Fantech publishes no SDK. It works with the tray icon and notifications only.
+
+## Supported models
+
+Lenovo gaming laptops (2020–2024) with the **4-zone RGB keyboard** on the ITE controller (USB vendor `048D`).
+Find your keyboard ID with `.venv\Scripts\python -m claude_rgb_status devices`.
+
+| Keyboard ID | Laptops | Status |
+|---|---|---|
+| `C994` | Legion / Legion Slim 2024 (e.g. Legion Slim 5 16AHP9) | **Verified on real hardware** |
+| `C995` | Legion Pro 2024 | Same protocol, not tested |
+| `C993` | LOQ 2024 | Same protocol, not tested |
+| `C985` | Legion Pro 2023 | Same protocol, not tested |
+| `C984` | Legion / Legion Slim 2023 | Same protocol, not tested |
+| `C983` | LOQ 2023 | Same protocol, not tested |
+| `C975` | Legion 2022 | Same protocol, not tested |
+| `C973` | IdeaPad Gaming 2022 | Same protocol, not tested |
+| `C965` | Legion 2021 | Same protocol, not tested |
+| `C963` | IdeaPad Gaming 2021 | Same protocol, not tested |
+| `C955` | Legion 2020 | Same protocol, not tested |
+
+The IDs and the protocol come from OpenRGB, L5P-Keyboard-RGB and LegionAura. Model names differ slightly between
+those projects; the keyboard ID is what counts.
+
+**Not supported** (the tray icon, notifications and sound still work; choose **None** as the keyboard):
+
+- **Per-key RGB laptops** (Legion 7/7i, Legion Pro 7, Legion 9i): different, larger protocol. The app doesn't
+  recognize these keyboards and never writes to them.
+- **2025 models (Gen 10)**: Lenovo moved to a new controller protocol (`C195` Legion 5 Gen 10, `C197` Legion 7 /
+  Pro 7 Gen 10). OpenRGB supports them (tested on Linux), so an OpenRGB output could add them later.
+- **2026 models (Gen 11)**: no public protocol information yet.
+- White-backlight-only models, ThinkPad/Yoga laptops, Lenovo external keyboards and mice, non-Windows systems.
+- **Other brands.** Example checked 2026-10-03: Fantech Atom Pro (USB `3151:6000`, Bluetooth "Atom Pro 5.0").
+  OpenRGB's Royuan driver covers other `3151` keyboards but not `6000`, it has no Dynamic Lighting interface,
+  and Fantech publishes no SDK.
+
+A keyboard with the same 4-zone interface but an ID not in the table is listed as **unverified** and is never
+written to unless you set `"allow_unverified_devices": true` in `config.json`.
 
 ## Setup
 
